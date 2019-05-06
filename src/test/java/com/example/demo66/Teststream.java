@@ -1,13 +1,17 @@
 package com.example.demo66;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 public class Teststream {
     @Test
     public void testcj(){
@@ -129,6 +133,24 @@ public class Teststream {
         list1.parallelStream().forEachOrdered(System.out :: println);
         System.out.println("---原来的List2---");
         list2.parallelStream().forEachOrdered(System.out :: println);
+    }
+
+    @Test
+    public void testMapTransfer(){
+        List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+        IntSummaryStatistics is = numbers.stream().mapToInt((x)->x).summaryStatistics();
+        int max = is.getMax();
+        int min = is.getMin();
+        long sum = is.getSum();
+        double avg = is.getAverage();
+        long count = is.getCount();
+        log.info("最大："+max);
+        log.info("最小："+min);
+        log.info("总数："+sum);
+        log.info("平均:"+avg);
+        log.info("个数"+count);
+
+
     }
 
 

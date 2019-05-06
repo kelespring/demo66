@@ -260,6 +260,40 @@ public class TestJava8Stream {
         System.out.println(listA_03); // 结果:[A, B, C]
         System.out.println(listB_03); // 结果:[B, C]
     }
+
+    @Test
+    public void testStream(){
+        List<Student> students = new ArrayList<Student>();
+        Student student = new Student("张三","女","11");
+        Student student2 = new Student("张三","男","11");
+        Student student3 = new Student("张三","男","11");
+        Student student4 = new Student("李四","男","11");
+        Student student5 = new Student("李四","男","11");
+        Student student6 = new Student("王五","男","11");
+        students.add(student);
+        students.add(student2);
+        students.add(student3);
+        students.add(student4);
+        students.add(student5);
+        students.add(student6);
+//        Map<String,List<Student>> map = students.stream().collect(Collectors.groupingBy(Student :: getName));
+//        map.forEach((k,v) -> {
+//            System.out.println("k = "+ k + "||" +"v = " + v.stream().collect(Collectors.groupingBy(Student :: getSex)).size());
+//        });
+
+        Map<Student, List<Student>> map = students.stream()
+                .collect(Collectors.groupingBy(f -> new Student(f.getName(),f.getSex())));
+
+        map.forEach((o, o2) -> {
+            List<Student> studentss = o2;
+            System.out.println(o);
+            System.out.println("---------------start----------------");
+
+            studentss.forEach(s -> System.out.println(s));
+            System.out.println("---------------end----------------");
+
+        });
+    }
 }
 
 
@@ -268,4 +302,17 @@ public class TestJava8Stream {
  class People {
     String name;
     int age;
+}
+
+@Data
+@AllArgsConstructor
+class Student {
+    String name;
+    String sex;
+    String age;
+
+    public Student(String name, String sex) {
+        this.name = name;
+        this.sex = sex;
+    }
 }
